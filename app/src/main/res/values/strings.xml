@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">automatechecklisttest</string>
+    <string name="close_all">Fechar tudo</string>
+    <string name="about_phone">Sobre o telefone</string>
+    <string name="model_name">Nome do modelo</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="connected">Conectado</string>
+    <string name="connect">Conectar</string>
+</resources>

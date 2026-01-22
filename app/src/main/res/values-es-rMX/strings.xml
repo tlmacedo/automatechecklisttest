@@ -1,0 +1,5 @@
+<resources>
+    <string name="close_all">Cerrar todo</string>
+    <string name="about_phone">Acerca del teléfono</string>
+    <string name="model_name">Nombre del modelo</string>
+</resources>
