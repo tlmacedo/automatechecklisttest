@@ -51,6 +51,6 @@ dependencies {
 
     androidTestImplementation(libs.androidx.rules)
 
-
-
+    // Local library for OMC decoding
+    androidTestImplementation(files("../libs/omc-text-decoder-1.2.jar"))
 }

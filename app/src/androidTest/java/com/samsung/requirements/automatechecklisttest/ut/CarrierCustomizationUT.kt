@@ -1,78 +1,39 @@
 package com.samsung.requirements.automatechecklisttest.ut
 
 import android.util.Log
-import com.samsung.requirements.automatechecklisttest.base.BaseTest
+import com.samsung.requirements.automatechecklisttest.base.BaseUT
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * Teste de baixo nível para validar a existência de arquivos de customização da Carrier (operadora).
- * Verifica arquivos de informação regulatória (regulatory_info.png) baseando-se no Sales Code e OMC Path.
+ * Teste para validar a customização da Carrier (Operadora).
+ * Verifica a existência de imagens regulatórias e se as TAGs no CSC estão corretas.
  */
-class CarrierCustomizationUT : BaseTest() {
+class CarrierCustomizationUT : BaseUT() {
 
     @Test
-    fun validateRegulatoryInfoFilesBySalesCode() {
-        Log.i("CarrierCustomizationUT", "--- Iniciando Validação de Arquivos da Carrier ---")
+    fun validateRegulatoryInfoAndCscTags() {
+        Log.i("CarrierCustomizationUT", "--- Início da Validação de Customização ---")
+        Log.i("CarrierCustomizationUT", "Sales Code detectado via BaseUT: $salesCode")
 
-        // 1. Obtém informações de customização (Sales Code e OMC Path)
-        val salesCode = getSystemProperty("ro.csc.sales_code")
-            .ifBlank { getSystemProperty("ro.boot.sales_code") }
-            .ifBlank { getSystemProperty("persist.sys.prev_salescode") }
+        // 1. Validação de Arquivo de Imagem no /prism
+        val imagePath = "/prism/etc/carriers/single/$salesCode/regulatory_info.png"
+        val imageExists = checkFileExistsViaShell(imagePath)
         
-        val omcPath = getSystemProperty("persist.sys.omc_path")
-            .ifBlank { getSystemProperty("ro.csc.omc_path") }
+        Log.i("CarrierCustomizationUT", "Imagem Regulatória em $imagePath: ${if (imageExists) "ENCONTRADA" else "NÃO ENCONTRADA"}")
 
-        Log.i("CarrierCustomizationUT", "Sales Code detectado: $salesCode")
-        Log.i("CarrierCustomizationUT", "OMC Path detectado: $omcPath")
+        // 2. Validação de TAG carregada automaticamente pela BaseUT
+        // A BaseUT já parseou cscfeature.xml, customer_carrier_feature.json e customer.xml
+        val supportRegulatoryTag = "CscFeature_Setting_SupportRegulatoryInfo"
+        val tagValue = getCscTag(supportRegulatoryTag)
 
-        // 2. Constrói caminhos dinâmicos baseados nas propriedades detectadas
-        val pathsToCheck = mutableSetOf(
-            "/carrier/data/regulatory_info.png",
-            "/carrier/data/regulatory_info_ds.png",
-            "/system/carrier/regulatory_info.png",
-            "/efs/carrier/regulatory_info.png"
-        )
+        Log.i("CarrierCustomizationUT", "TAG $supportRegulatoryTag encontrada no CSC: $tagValue")
 
-        // Adiciona caminhos baseados no OMC Path se disponível
-        if (omcPath.isNotBlank()) {
-            pathsToCheck.add("$omcPath/etc/regulatory_info.png")
-            pathsToCheck.add("$omcPath/etc/regulatory_info_ds.png")
-            pathsToCheck.add("$omcPath/res/media/regulatory_info.png")
-        }
+        // 3. Asserções do Teste
+        assertTrue("Erro: Imagem regulatória não encontrada em $imagePath", imageExists)
+        assertTrue("Erro: TAG $supportRegulatoryTag deveria estar como TRUE no CSC", 
+            tagValue?.equals("TRUE", ignoreCase = true) == true)
 
-        // Adiciona caminhos baseados no Sales Code se disponível
-        if (salesCode.isNotBlank()) {
-            pathsToCheck.add("/system/csc/$salesCode/regulatory_info.png")
-            pathsToCheck.add("/data/omc/$salesCode/etc/regulatory_info.png")
-            pathsToCheck.add("/data/csc/$salesCode/regulatory_info.png")
-        }
-
-        var foundAtLeastOne = false
-
-        pathsToCheck.forEach { path ->
-            if (checkFileExistsViaShell(path)) {
-                Log.i("CarrierCustomizationUT", "[SUCESSO] Arquivo encontrado em: $path")
-                foundAtLeastOne = true
-                getFileDetails(path)
-            } else {
-                Log.d("CarrierCustomizationUT", "[AVISO] Arquivo não encontrado em: $path")
-            }
-        }
-
-        if (!foundAtLeastOne) {
-            Log.e("CarrierCustomizationUT", "[ERRO] Nenhum arquivo regulatório encontrado para Sales Code ($salesCode) ou OMC Path ($omcPath)")
-        }
-        
-        Log.i("CarrierCustomizationUT", "--------------------------------------------------")
-    }
-
-    private fun getFileDetails(path: String) {
-        try {
-            val process = Runtime.getRuntime().exec("ls -l $path")
-            val details = process.inputStream.bufferedReader().use { it.readText() }.trim()
-            Log.i("CarrierCustomizationUT", "Detalhes: $details")
-        } catch (e: Exception) {
-            Log.e("CarrierCustomizationUT", "Erro ao obter detalhes: ${e.message}")
-        }
+        Log.i("CarrierCustomizationUT", "--- Fim da Validação de Customização (SUCESSO) ---")
     }
 }
