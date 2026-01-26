@@ -6,9 +6,10 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 
-class ScreenInspector(private val device: UiDevice, private val tag: String = "ScreenInspector") {
+class ScreenInspector(private val device: UiDevice) {
 
     companion object {
+        private const val tag = "ScreenInspector"
         private const val DEFAULT_TIMEOUT = 5000L // 5 segundos
     }
 

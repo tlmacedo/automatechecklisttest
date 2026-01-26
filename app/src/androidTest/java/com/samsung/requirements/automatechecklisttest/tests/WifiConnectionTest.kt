@@ -3,11 +3,8 @@ package com.samsung.requirements.automatechecklisttest.tests
 import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
-import androidx.test.uiautomator.UiObject2
-import androidx.test.uiautomator.Until
-import com.samsung.requirements.automatechecklisttest.base.BaseTest
 import com.samsung.requirements.automatechecklisttest.R
-import org.junit.Assert.assertNotNull
+import com.samsung.requirements.automatechecklisttest.base.BaseTest
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -22,7 +19,6 @@ import org.junit.Test
 class WifiConnectionTest : BaseTest() {
 
     private val WIFI_TOGGLE_TIMEOUT = 6_000L
-    private val WIFI_SCAN_TIMEOUT = 15_000L
     private val WIFI_CONNECTION_TIMEOUT = 20_000L
 
     private val args = InstrumentationRegistry.getArguments()
@@ -52,12 +48,13 @@ class WifiConnectionTest : BaseTest() {
         if (wifiSwitch.isChecked) {
             Log.i("WifiTest", "Wi-Fi está LIGADO. Desligando...")
             safeClick(wifiSwitch)
-            waitCheckedState(wifiSwitch, expected = false, timeoutMs = WIFI_TOGGLE_TIMEOUT)
+            // Removendo argumentos nomeados pois a base agora é Java
+            waitCheckedState(wifiSwitch, false, WIFI_TOGGLE_TIMEOUT)
         }
 
         Log.i("WifiTest", "Ligando o Wi-Fi...")
         if (!wifiSwitch.isChecked) safeClick(wifiSwitch)
-        val onOk = waitCheckedState(wifiSwitch, expected = true, timeoutMs = WIFI_TOGGLE_TIMEOUT)
+        val onOk = waitCheckedState(wifiSwitch, true, WIFI_TOGGLE_TIMEOUT)
         assertTrue("Falha ao ligar o Wi-Fi.", onOk)
 
         // 4) Procura rede e clica (fazendo scroll se necessário)

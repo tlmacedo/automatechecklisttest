@@ -2,4 +2,8 @@
     <string name="close_all">Close all</string>
     <string name="about_phone">About phone</string>
     <string name="model_name">Model name</string>
+    <string name="regulatory_info">Regulatory information</string>
+    <string name="connections">Connections</string>
+    <string name="nfc">NFC</string>
+    <string name="nfc_contactless_payments">NFC and contactless payments</string>
 </resources>

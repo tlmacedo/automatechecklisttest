@@ -6,4 +6,8 @@
     <string name="wifi">Wi-Fi</string>
     <string name="connected">Conectado</string>
     <string name="connect">Conectar</string>
+    <string name="regulatory_info">Informações regulatórias</string>
+    <string name="connections">Conexões</string>
+    <string name="nfc">NFC</string>
+    <string name="nfc_contactless_payments">NFC e Pagamentos sem contato</string>
 </resources>

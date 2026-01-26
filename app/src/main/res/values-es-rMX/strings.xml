@@ -2,4 +2,7 @@
     <string name="close_all">Cerrar todo</string>
     <string name="about_phone">Acerca del teléfono</string>
     <string name="model_name">Nombre del modelo</string>
+    <string name="connections">Conexiones</string>
+    <string name="nfc">NFC</string>
+    <string name="nfc_contactless_payments">NFC y pagos sin contacto</string>
 </resources>

@@ -3,8 +3,8 @@ package com.samsung.requirements.automatechecklisttest.tests
 import android.util.Log
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiObject2
-import com.samsung.requirements.automatechecklisttest.base.BaseTest
 import com.samsung.requirements.automatechecklisttest.R
+import com.samsung.requirements.automatechecklisttest.base.BaseTest
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
@@ -24,7 +24,7 @@ class DeviceModelTest : BaseTest() {
         // 3. Aguarda a tela "Sobre o telefone" carregar (traduzido automaticamente)
         waitVisible(R.string.model_name, DEFAULT_TIMEOUT)
         
-        screenInspector.logAllVisibleElements(packageName = "com.android.settings")
+        screenInspector.logAllVisibleElements("com.android.settings")
 
         // 4. Localiza o rótulo e extrai o nome do modelo
         val modelLabel = waitAndFindObject(By.text(appContext.getString(R.string.model_name)))
