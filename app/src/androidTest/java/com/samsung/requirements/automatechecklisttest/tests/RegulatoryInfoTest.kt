@@ -21,6 +21,9 @@ class RegulatoryInfoTest : BaseTest() {
 
         // 2. Busca e clica em "Sobre o telefone"
         scrollAndClick(R.string.about_phone)
+        
+        // Tira print da tela onde o menu "Informações regulatórias" deve estar visível
+        takeScreenshot("Settings_AboutPhone_Menu")
 
         // 3. Busca e clica em "Informações regulatórias"
         scrollAndClick(R.string.regulatory_info)
@@ -31,8 +34,12 @@ class RegulatoryInfoTest : BaseTest() {
         
         if (isImageVisible) {
             Log.i("RegulatoryInfoTest", "Imagem de informações regulatórias detectada com sucesso.")
+            // Tira print da tela com a imagem regulatória
+            takeScreenshot("Regulatory_Info_Image")
         } else {
             Log.e("RegulatoryInfoTest", "Imagem de informações regulatórias não foi encontrada.")
+            // Tira print mesmo se falhar para evidência
+            takeScreenshot("Regulatory_Info_Not_Found")
             // Logar elementos para debug caso falhe
             screenInspector.logAllVisibleElements(null)
         }
