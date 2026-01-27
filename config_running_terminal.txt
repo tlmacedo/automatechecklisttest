@@ -1,0 +1,22 @@
+Para criar e instalar os APKs necessários para rodar os testes no seu dispositivo Android, execute os seguintes passos no terminal:
+1. Gerar os APKs
+Execute o comando abaixo para compilar tanto o aplicativo quanto o pacote de testes:
+./gradlew :app:assembleDebug :app:assembleDebugAndroidTest
+2. Localizar os arquivos
+Os APKs foram gerados nos seguintes caminhos:
+•
+App Principal: app/build/outputs/apk/debug/app-debug.apk
+•
+App de Testes: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+3. Instalar no Dispositivo
+Conecte seu dispositivo via USB (com o Debug USB ativado) e execute:
+# Instala o aplicativo
+adb install -r app/build/outputs/apk/debug/app-debug.apk
+
+# Instala o runner de testes
+adb install -r app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+4. Executar o Teste
+Agora você pode rodar o teste específico do NFC diretamente pelo adb:
+Kotlin
+adb shell am instrument -w -e class com.samsung.requirements.automatechecklisttest.tests.NfcTest com.samsung.requirements.automatechecklisttest.test/androidx.test.runner.AndroidJUnitRunner
+Nota: O APK "genérico" que você solicitou é o app-debug.apk. Ele contém a estrutura base necessária para que o androidTest consiga se acoplar e executar as ações de UI Automator.

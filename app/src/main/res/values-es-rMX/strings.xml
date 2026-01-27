@@ -4,5 +4,7 @@
     <string name="model_name">Nombre del modelo</string>
     <string name="connections">Conexiones</string>
     <string name="nfc">NFC</string>
-    <string name="nfc_contactless_payments">NFC y pagos sin contacto</string>
+    <string name="nfc_contactless_payments">NFC y pagos sem contato</string>
+    <string name="mobile_networks">Redes móviles</string>
+    <string name="network_mode">Modo de red</string>
 </resources>

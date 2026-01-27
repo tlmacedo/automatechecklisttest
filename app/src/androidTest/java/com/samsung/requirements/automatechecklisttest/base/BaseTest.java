@@ -51,7 +51,9 @@ public class BaseTest {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.ACCESS_NETWORK_STATE,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_WIFI_STATE,
+            Manifest.permission.CHANGE_WIFI_STATE
     );
 
     @Rule
@@ -123,6 +125,21 @@ public class BaseTest {
         } catch (Exception e) {
             Log.e("BaseTest", "Erro ao realizar scroll e clicar em: " + text);
             safeClick(waitAndFindObject(By.text(text)));
+        }
+    }
+
+    /**
+     * Realiza scroll até encontrar um objeto que CONTÉM o texto da string resource e clica.
+     */
+    protected void scrollAndClickContains(int stringResId) {
+        String text = appContext.getString(stringResId);
+        try {
+            UiScrollable scrollable = new UiScrollable(new UiSelector().scrollable(true));
+            scrollable.scrollIntoView(new UiSelector().textContains(text));
+            safeClick(waitAndFindObject(By.textContains(text)));
+        } catch (Exception e) {
+            Log.e("BaseTest", "Erro ao realizar scroll e clicar (contendo): " + text);
+            safeClick(waitAndFindObject(By.textContains(text)));
         }
     }
 
