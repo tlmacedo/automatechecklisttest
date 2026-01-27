@@ -34,7 +34,7 @@ class MobileNetworkIconTest : BaseTest() {
             initialBandName = initialOptions?.find { it.isChecked }?.text
             Log.i("MobileNetworkTest", "Banda inicial detectada: $initialBandName")
             
-            // Fecha o menu para iniciar o loop do zero ou reutiliza a lista
+            // Fecha o menu para iniciar o loop do zero
             device.pressBack() 
 
             // 4. Obter a lista de opções de banda
@@ -87,12 +87,9 @@ class MobileNetworkIconTest : BaseTest() {
         
         Log.i("MobileNetworkTest", "Restaurando banda inicial: $initialBandName")
         try {
-            // Garante que estamos na tela de Redes Móveis
-            launchActivity("com.android.settings", "com.android.settings.Settings")
-            scrollAndClick(R.string.connections)
-            scrollAndClick(R.string.mobile_networks)
-            
+            // Clica no menu de seleção de banda (estando na tela de Redes Móveis)
             clickNetworkModeMenu()
+            
             val options = getBandOptions()
             val target = options?.find { it.text == initialBandName }
             
@@ -105,7 +102,7 @@ class MobileNetworkIconTest : BaseTest() {
                     device.pressBack()
                 }
             } else {
-                Log.e("MobileNetworkTest", "Não foi possível encontrar a banda inicial para restaurar.")
+                Log.e("MobileNetworkTest", "Não foi possível encontrar a banda inicial na lista.")
                 device.pressBack()
             }
         } catch (e: Exception) {
