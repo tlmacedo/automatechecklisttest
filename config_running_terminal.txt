@@ -1,3 +1,7 @@
+//./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.samsung.requirements.automatechecklisttest.tests.MobileNetworkIconTest
+
+
+
 Para criar e instalar os APKs necessários para rodar os testes no seu dispositivo Android, execute os seguintes passos no terminal:
 1. Gerar os APKs
 Execute o comando abaixo para compilar tanto o aplicativo quanto o pacote de testes:
