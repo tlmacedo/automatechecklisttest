@@ -1,0 +1,115 @@
+Contexto Geral para Todos os Testes
+Todos os testes são escritos em Kotlin usando o framework Android UI Automator. Eles herdam de uma classe BaseTest que fornece funções auxiliares comuns, como:
+
+launchActivity(packageName, className): Para abrir uma tela específica.
+scrollAndClick(resourceId)`` / ``scrollAndClickContains(resourceId): Para encontrar um item rolando a tela até ele e, em seguida, clicando nele.
+takeScreenshot(filename): Para capturar a tela do dispositivo.
+safeClick(uiObject): Para clicar em um elemento da interface do usuário (UI).
+waitVisible(selector, timeout): Para aguardar um elemento aparecer.
+Setup (@Before): Desbloqueia o dispositivo, vai para a tela inicial e fecha todos os aplicativos recentes.
+Cleanup (blocos finally): Os testes usam blocos finally para garantir que o estado do dispositivo seja restaurado (por exemplo, reativando o Wi-Fi, restaurando a banda de rede original).
+1. NfcTest
+Objetivo: Criar um teste automatizado que verifica a funcionalidade do NFC (Near Field Communication), manipulando suas configurações e checando sua visibilidade no Painel de Configurações Rápidas.
+
+Fluxo e Lógica do Teste:
+
+Navegar até as Configurações de NFC:
+
+Abrir a tela principal de Configurações do Android (com.android.settings.Settings).
+Rolar a tela e clicar no item de menu "Conexões".
+Aguardar o carregamento da tela "Conexões".
+Na tela "Conexões", rolar e clicar no item de menu "NFC e pagamentos sem contato" (nota: em versões mais antigas do Android, o nome pode ser apenas "NFC").
+Aguardar o carregamento da tela de configurações de NFC, que é confirmado pela presença de um interruptor (classe android.widget.Switch).
+Verificação do Estado Inicial:
+
+Na tela de NFC, encontrar o interruptor principal do NFC.
+Registrar seu estado inicial (marcado/ligado ou desmarcado/desligado).
+Tirar uma captura de tela (screenshot) com o nome "NFC_State_Initial".
+Validar no Painel Rápido: Abrir o Painel de Configurações Rápidas (deslizando de cima para baixo). Verificar se a visibilidade do ícone de NFC corresponde ao seu estado inicial (ex: se o NFC está ligado, o ícone deve estar visível). Tirar um screenshot chamado "QuickPanel_Initial".
+Fechar o Painel de Configurações Rápidas e retornar à tela de configurações de NFC.
+Alternar o Estado do NFC (Primeira Mudança):
+
+Clicar no interruptor de NFC para alterar seu estado (se estava ligado, desligá-lo, e vice-versa).
+Aguardar a atualização do interruptor para o novo estado.
+Tirar um screenshot chamado "NFC_State_Changed".
+Validar no Painel Rápido: Abrir o Painel de Configurações Rápidas novamente. Verificar se a visibilidade do ícone de NFC corresponde ao novo estado. Tirar um screenshot chamado "QuickPanel_Changed".
+Fechar o Painel de Configurações Rápidas e retornar à tela de configurações de NFC.
+Restaurar Estado Inicial:
+
+Clicar no interruptor de NFC mais uma vez para retorná-lo ao seu estado original.
+Aguardar a atualização do interruptor.
+Tirar um screenshot chamado "NFC_State_Restored".
+O teste é concluído.
+Verificações Principais (Assertivas):
+
+Afirmar que cada passo de navegação foi bem-sucedido (ou seja, a tela de destino foi carregada).
+Afirmar que o interruptor de NFC foi encontrado na tela de configurações de NFC.
+Afirmar que o ícone de NFC no Painel de Configurações Rápidas está visível quando o NFC está ligado e oculto quando está desligado.
+Afirmar que o interruptor muda seu estado com sucesso após ser clicado.
+2. MobileNetworkIconTest
+Objetivo: Criar um teste que alterna entre todos os modos de rede móvel disponíveis (ex:5G/LTE, Apenas LTE, Apenas 3G) e verifica se o ícone de tipo de rede correto (5G, 4G, 3G, etc.) aparece na barra de status para cada seleção.
+
+Pré-condições:
+
+O dispositivo deve ter um chip (SIM card) ativo e pronto para uso.
+O teste irá desativar o Wi-Fi para forçar o uso de dados móveis.
+Fluxo e Lógica do Teste:
+
+Preparação e Navegação:
+
+Verificar se há um SIM card pronto. Se não houver, o teste deve falhar.
+Verificar se o Wi-Fi está habilitado. Se estiver, armazenar seu estado (habilitado) e depois desativá-lo usando um comando de shell adb (svc wifi disable).
+Habilitar os dados móveis usando o comando svc data enable.
+Navegar até a tela "Redes móveis" abrindo Configurações -> Conexões -> Redes móveis.
+Coletar Bandas e Validar Estado Inicial:
+
+Na tela "Redes móveis", clicar em "Modo de rede" para abrir o menu de seleção.
+Tirar um screenshot do menu aberto mostrando todas as bandas disponíveis, com o nome "Available_Network_Bands".
+Na lista de opções, identificar qual está marcada. Esta é a banda inicial. Armazenar seu nome (ex: "5G/LTE/3G/2G").
+Criar uma lista ordenada com os nomes de todas as bandas, colocando a banda inicial no começo. Isso otimiza o teste ao começar pelo estado atual.
+Imediatamente validar o ícone para esta banda inicial:
+Fechar o menu.
+Aguardar o ícone de rede correspondente aparecer na barra de status (ex: "5G" ou "4G").
+Reabrir o menu "Modo de rede".
+Tirar um screenshot com o ícone visível e o menu aberto, com o nome "NetworkIcon_[nome_da_banda]".
+Iterar e Validar Outras Bandas:
+
+Para cada banda subsequente na lista ordenada:
+Com o menu ainda aberto, clicar no nome da próxima banda. Essa ação a seleciona e fecha o menu automaticamente.
+Aguardar o novo ícone de rede correspondente aparecer na barra de status. Isso pode levar vários segundos, pois o modem troca o tipo de conexão.
+Reabrir o menu "Modo de rede".
+Tirar um screenshot mostrando o novo ícone na barra de status com o menu aberto e a nova banda selecionada.
+Limpeza (Bloco finally):
+
+Após o término do loop, navegar de volta para a tela "Redes móveis".
+Abrir o menu "Modo de rede" e selecionar novamente a banda inicial para restaurar a configuração original do dispositivo.
+Se o Wi-Fi foi desativado pelo teste, reativá-lo com o comando svc wifi enable.
+Verificações Principais (Assertivas):
+
+Afirmar que um SIM card está presente.
+Afirmar que todos os passos de navegação (para Conexões, para Redes Móveis) são bem-sucedidos.
+Afirmar que o menu "Modo de rede" abre e contém opções selecionáveis.
+Para cada banda, afirmar que um ícone de rede correspondente (5G, 4G, LTE, 3G, etc.) aparece na barra de status dentro de um tempo limite de 30 segundos.
+3. RegulatoryInfoTest
+Objetivo: Criar um teste automatizado que verifica se a tela "Informações regulamentares" está acessível a partir das configurações e se exibe algum conteúdo.
+
+Fluxo e Lógica do Teste:
+
+Navegar para as Informações Regulamentares:
+
+Abrir a tela principal de Configurações do Android (com.android.settings.Settings).
+Rolar a tela e clicar no item de menu "Sobre o telefone".
+Verificar se a tela "Sobre o telefone" carregou, checando seu título. Tirar um screenshot chamado "Settings_AboutPhone_Screen".
+Na tela "Sobre o telefone", rolar e clicar no item de menu "Informações regulamentares".
+Verificar se a tela "Informações regulamentares" carregou, checando seu título.
+Verificar o Conteúdo:
+
+O conteúdo desta tela varia de acordo com o dispositivo; pode ser um conjunto de imagens, uma página web ou texto simples.
+O teste deve verificar de forma robusta a presença de ou um elemento ImageView (para logos de certificação) ou um elemento WebView (para informações baseadas na web).
+Aguardar até 20 segundos para que um desses elementos apareça.
+Tirar um screenshot final do conteúdo, chamado "Regulatory_Info_Content".
+Verificações Principais (Assertivas):
+
+Afirmar que a tela "Sobre o telefone" carrega com sucesso após o clique.
+Afirmar que a tela "Informações regulamentares" carrega com sucesso após o clique.
+Afirmar que um ImageView ou um WebView é encontrado na tela "Informações regulamentares". Se nenhum dos dois for encontrado, o teste falha.
