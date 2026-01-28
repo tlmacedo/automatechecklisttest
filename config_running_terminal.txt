@@ -24,3 +24,31 @@ Agora você pode rodar o teste específico do NFC diretamente pelo adb:
 Kotlin
 adb shell am instrument -w -e class com.samsung.requirements.automatechecklisttest.tests.NfcTest com.samsung.requirements.automatechecklisttest.test/androidx.test.runner.AndroidJUnitRunner
 Nota: O APK "genérico" que você solicitou é o app-debug.apk. Ele contém a estrutura base necessária para que o androidTest consiga se acoplar e executar as ações de UI Automator.
+
+5. Script Facilitador (Recomendado)
+Para agilizar a execução, utilize o script `run_test.sh` criado na raiz do projeto.
+
+# 1. Dê permissão de execução (apenas na primeira vez):
+chmod +x run_test.sh
+
+# 2. Execute passando apenas o nome da classe (ou Classe#Metodo):
+./run_test.sh NfcTest
+./run_test.sh MobileNetworkIconTest
+
+6. Script com Compilação (Gradle)
+Para rodar testes novos ou modificados (que precisam de compilação), use o script `run_gradle_test.sh`:
+
+# Dê permissão de execução:
+chmod +x run_gradle_test.sh
+
+# Execute passando o nome da classe:
+./run_gradle_test.sh NfcTest
+
+7. Script de Debug (ADB)
+Para rodar o teste em modo de debug (o app pausa e aguarda o debugger do Android Studio):
+
+# Dê permissão de execução:
+chmod +x run_debug_test.sh
+
+# Execute:
+./run_debug_test.sh NfcTest
