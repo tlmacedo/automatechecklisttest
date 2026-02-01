@@ -52,3 +52,18 @@ chmod +x run_debug_test.sh
 
 # Execute:
 ./run_debug_test.sh NfcTest
+
+Entendido. Você quer usar o comando adb shell.
+
+Peço desculpas, o comando que passei anteriormente tinha um erro comum. O pacote do instrumentation (o APK de teste) geralmente é o applicationId do seu app com o sufixo .test.
+
+O comando adb shell am instrument correto deve usar com.samsung.requirements.automatechecklisttest.test como o nome do pacote para o AndroidJUnitRunner.
+
+Comando Corrigido
+Tente este comando. A única alteração é a adição de .test ao nome do pacote do componente de instrumentação:
+
+adb shell am instrument -w -e class com.samsung.requirements.automatechecklisttest.tests.RegulatoryInfoTest com.samsung.requirements.automatechecklisttest.test/androidx.test.runner.AndroidJUnitRunner
+Lembre-se: para este comando funcionar, os dois APKs (o do app e o de teste) precisam estar instalados no dispositivo. Se o comando acima ainda falhar, execute novamente os comandos de instalação para garantir que ambos estejam atualizados:
+
+./gradlew installDebug
+./gradlew installDebugAndroidTest
