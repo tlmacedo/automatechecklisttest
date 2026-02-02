@@ -1,0 +1,50 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Background white area for contrast -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54m-42,0a42,42 0,1 1,84 0a42,42 0,1 1,-84 0" />
+
+    <!-- SIDIA Text (Simplified vector path representing the logo) -->
+    <!-- s -->
+    <path
+        android:fillColor="#002094"
+        android:pathData="M28,50c0,-2.5 2,-4 5,-4s5,1.5 5,4s-2,4 -5,4s-5,-1.5 -5,-4z M31,50c0,1 1,2 2,2s2,-1 2,-2s-1,-2 -2,-2s-2,1 -2,2z" />
+    <!-- i -->
+    <path
+        android:fillColor="#002094"
+        android:pathData="M42,46h3v12h-3z" />
+    <!-- i dot -->
+    <path
+        android:fillColor="#00E600"
+        android:pathData="M43.5,43m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
+    <!-- d -->
+    <path
+        android:fillColor="#002094"
+        android:pathData="M48,46h3v12h-3z M48,52a4,4 0,1 0,8 0a4,4 0,1 0,-8 0 M51,52a1,1 0,1 1,2 0a1,1 0,1 1,-2 0" />
+    <!-- i -->
+    <path
+        android:fillColor="#002094"
+        android:pathData="M59,46h3v12h-3z" />
+    <!-- i dot -->
+    <path
+        android:fillColor="#00E600"
+        android:pathData="M60.5,43m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0" />
+    <!-- a -->
+    <path
+        android:fillColor="#002094"
+        android:pathData="M66,52a4,4 0,1 0,8 0a4,4 0,1 0,-8 0 M72,46v12 M69,52a1,1 0,1 1,2 0a1,1 0,1 1,-2 0" />
+
+    <!-- //impact innovation -->
+    <path
+        android:fillColor="#00E600"
+        android:pathData="M28,64l2,-4h1.5l-2,4z M32,64l2,-4h1.5l-2,4z" />
+    <path
+        android:fillColor="#00E600"
+        android:pathData="M36,62h44v2h-44z" />
+
+</vector>

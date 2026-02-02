@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Paleta de Cores Oficial Sidia (Baseada nos Logos) -->
+
+    <!-- Azul Sidia (Logo principal) -->
+    <color name="primary">#002094</color>
+    <color name="primary_dark">#001675</color>
+    <color name="primary_light">#E8EAF6</color> <!-- Azul muito suave para backgrounds de itens -->
+
+    <!-- Verde Innovation (Pontos do 'i' e //impact innovation) -->
+    <color name="accent">#00E600</color>
+    <color name="innovation_green">#00E600</color>
+
+    <color name="background_page">#F5F7FA</color>
+    <color name="surface_card">#FFFFFF</color>
+
+    <!-- Cores de Texto -->
+    <color name="text_high_emphasis">#001046</color>
+    <color name="text_medium_emphasis">#455A64</color>
+    <color name="text_low_emphasis">#90A4AE</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
+    <color name="divider_color">#E0E0E0</color>
+
+    <!-- Cores para Status -->
+    <color name="success">#00E600</color>
+    <color name="error">#FF1744</color>
+
+    <!-- Compatibilidade -->
+    <color name="purple_200">#9FA8DA</color>
+    <color name="purple_500">#3F51B5</color>
+    <color name="purple_700">#303F9F</color>
+    <color name="teal_200">#00E600</color>
+    <color name="teal_700">#00C800</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>

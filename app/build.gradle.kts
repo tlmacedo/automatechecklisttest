@@ -41,6 +41,9 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
+    // OMC decoding library available for both main and androidTest
+    implementation(files("../libs/omc-text-decoder-1.2.jar"))
+
     // Core testing libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -50,7 +53,4 @@ dependencies {
     androidTestImplementation(libs.androidx.uiautomator)
 
     androidTestImplementation(libs.androidx.rules)
-
-    // Local library for OMC decoding
-    androidTestImplementation(files("../libs/omc-text-decoder-1.2.jar"))
 }

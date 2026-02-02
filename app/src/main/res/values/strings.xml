@@ -10,6 +10,8 @@
     <string name="connections">Conexões</string>
     <string name="nfc">NFC</string>
     <string name="nfc_contactless_payments">NFC e Pagamentos sem contato</string>
-    <string name="mobile_networks">Redes móveis</string>
-    <string name="network_mode">Seleção de banda</string>
+    <string name="mobile_networks">Modo de rede</string>
+    <string name="network_mode">Modo de rede</string>
+    <string name="navigation_drawer_open">Abrir navegação</string>
+    <string name="navigation_drawer_close">Fechar navegação</string>
 </resources>
